@@ -8,6 +8,7 @@ import api from '../api/index';
 import { useEffect } from 'react';
 import SearchStatus from './searchStatus';
 import UsersTable from './usersTable';
+import searchValidate from '../utils/search';
 
 const Users = () => {
   const [users, setUsers] = useState(api.users.default.fetchAll());
@@ -29,10 +30,17 @@ const Users = () => {
   const [str, setStr] = useState();
   const [activeItems, setActiveItems] = useState();
   const [sortBy, setSortBy] = useState({ iter: 'name', order: 'asc' });
+  const [search, setSearch] = useState('');
   const count = users.length;
   const pageSize = 10;
+  const searchUser = ({ target }) => {
+    setSearch(target.value);
+    setActiveItems();
+  };
 
+  const resultSearch = searchValidate(users, search);
   const changeFilter = (props) => {
+    setSearch('');
     setActiveItems(props);
     setCurrentPage(1);
   };
@@ -50,6 +58,8 @@ const Users = () => {
   };
   const filteredUsers = activeItems
     ? users.filter((item) => item.profession === activeItems)
+    : resultSearch
+    ? resultSearch
     : users;
 
   const sortItems = lodash.orderBy(
@@ -67,6 +77,7 @@ const Users = () => {
     return (
       <>
         <SearchStatus length={filteredUsers.length} />
+        <input type='text' onChange={searchUser} value={search} />
         {str && (
           <GroupList
             onChangeFilter={changeFilter}
@@ -78,6 +89,7 @@ const Users = () => {
         </button>
         {count > 0 && (
           <UsersTable
+            resultSarch={resultSearch}
             sortBy={sortBy}
             users={usersCrop}
             onDelete={handleDelete}

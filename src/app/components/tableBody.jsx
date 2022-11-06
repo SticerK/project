@@ -1,6 +1,6 @@
 import lodash from 'lodash';
 
-const TableBody = ({ data, columns }) => {
+const TableBody = ({ data, columns, resultSarch }) => {
   const isComponent = (column, item) => {
     if (columns[column].component) {
       if (typeof columns[column].component === 'function') {
@@ -11,6 +11,10 @@ const TableBody = ({ data, columns }) => {
       return lodash.get(item, columns[column].i);
     }
   };
+  if (resultSarch) {
+    data = resultSarch;
+  }
+
   return (
     <tbody>
       {data.map((item) => (

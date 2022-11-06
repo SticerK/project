@@ -10,6 +10,7 @@ const UsersTable = ({
   sortBy,
   onToggleBookMark,
   onDelete,
+  resultSarch,
   ...rest
 }) => {
   const columns = {
@@ -45,7 +46,13 @@ const UsersTable = ({
   };
 
   return (
-    <Table setSort={setSort} sortBy={sortBy} columns={columns} data={users} />
+    <Table
+      setSort={setSort}
+      sortBy={sortBy}
+      columns={columns}
+      data={users}
+      resultSarch={resultSarch}
+    />
   );
 };
 

@@ -1,7 +1,7 @@
 import TableHeader from './tableHeader';
 import TableBody from './tableBody';
 
-const Table = ({ setSort, sortBy, columns, data }) => {
+const Table = ({ setSort, sortBy, columns, data, resultSarch }) => {
   return (
     <table className='table'>
       <TableHeader
@@ -9,7 +9,7 @@ const Table = ({ setSort, sortBy, columns, data }) => {
         sortBy={sortBy}
         columns={columns}></TableHeader>
 
-      <TableBody {...{ columns, data }} />
+      <TableBody {...{ columns, data, resultSarch }} />
     </table>
   );
 };
